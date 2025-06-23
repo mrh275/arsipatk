@@ -32,6 +32,93 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                        <i class="nav-icon fas fa-database"></i>
+                        <p>
+                            Master Data
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="./index.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Barang</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kategori</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Divisi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Transaksi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="./index.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Permintaan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penerimaan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link ">
+                        <i class="nav-icon fas fa-paste"></i>
+                        <p>
+                            Laporan
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="./index.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Persediaan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Permintaan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Penerimaan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </nav>
