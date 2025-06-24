@@ -12,6 +12,7 @@ class KategoriController extends Controller
         $dataKategori = Kategori::all();
         $data = [
             'title' => 'Kategori',
+            'dropdown' => 'master',
             'active' => 'kategori',
             'dataKategori' => $dataKategori,
             'hasDatatable' => '1',
