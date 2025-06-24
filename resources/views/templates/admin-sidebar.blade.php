@@ -25,15 +25,15 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ url('admin/dashboard') }}" class="nav-link {{ $active == 'dashboard' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                <li class="nav-item {{ $dropdown == 'master' ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link {{ $dropdown == 'master' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-database"></i>
                         <p>
                             Master Data
@@ -42,13 +42,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link">
+                            <a href="{{ url('admin/master/barang') }}" class="nav-link {{ $active == 'barang' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Barang</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('admin/master/kategori') }}" class="nav-link">
+                            <a href="{{ url('admin/master/kategori') }}" class="nav-link {{ $active == 'kategori' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kategori</p>
                             </a>
