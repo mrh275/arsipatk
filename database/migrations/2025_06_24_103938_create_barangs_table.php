@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_barang');
             $table->string('slug_barang');
             $table->string('stok_barang');
+            $table->string('satuan_barang');
             $table->timestamps();
         });
     }
