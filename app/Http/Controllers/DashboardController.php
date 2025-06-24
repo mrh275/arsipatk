@@ -12,6 +12,7 @@ class DashboardController extends Controller
         $data = [
             'title' => 'Dashboard',
             'description' => 'Welcome to the dashboard',
+            'hasDatatable' => '0',
         ];
 
         return view('admin.dashboard', $data);
