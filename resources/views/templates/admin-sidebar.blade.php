@@ -67,8 +67,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link ">
+                <li class="nav-item {{ $dropdown == 'transaksi' ? 'menu-open' : '' }}">
+                    <a href="javascript:void(0)" class="nav-link ">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             Transaksi
@@ -77,13 +77,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link">
+                            <a href="{{ url('admin/transaksi/data-permintaan') }}" class="nav-link {{ $active == 'permintaan' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Permintaan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
+                            <a href="{{ url('admin/transaksi/data-penerimaan') }}" class="nav-link {{ $active == 'penerimaan' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Penerimaan</p>
                             </a>
