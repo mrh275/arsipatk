@@ -37,6 +37,8 @@
                                             <th>ID Barang</th>
                                             <th>Nama Kategori</th>
                                             <th>Nama Barang</th>
+                                            <th>Stok Barang</th>
+                                            <th>Satuan Barang</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -47,6 +49,8 @@
                                                 <td>{{ $barang->id_barang }}</td>
                                                 <td>{{ $barang->kategori->nama_kategori }}</td>
                                                 <td>{{ $barang->nama_barang }}</td>
+                                                <td>{{ $barang->stok_barang }}</td>
+                                                <td>{{ $barang->satuan_barang }}</td>
                                                 <td>
                                                     <a href="#" class="btn btn-warning btn-sm">
                                                         Edit
