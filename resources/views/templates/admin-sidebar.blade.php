@@ -68,7 +68,7 @@
                     </ul>
                 </li>
                 <li class="nav-item {{ $dropdown == 'transaksi' ? 'menu-open' : '' }}">
-                    <a href="javascript:void(0)" class="nav-link ">
+                    <a href="javascript:void(0)" class="nav-link {{ $dropdown == 'transaksi' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             Transaksi
