@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoginController;
@@ -19,3 +20,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LoginController::class, 'index']);
 Route::get('admin/dashboard', [DashboardController::class, 'index']);
 Route::get('admin/master/kategori', [KategoriController::class, 'index']);
+
+Route::get('admin/master/barang', [BarangController::class, 'index']);
