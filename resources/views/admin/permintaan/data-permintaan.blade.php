@@ -8,13 +8,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Data Barang</h1>
+                        <h1>Data Permintaan</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                            <li class="breadcrumb-item"><a href="#">Master</a></li>
-                            <li class="breadcrumb-item active">Barang</li>
+                            <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
+                            <li class="breadcrumb-item active">Permintaan</li>
                         </ol>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                                                     {{-- <a href="{{ url('admin/transaksi/get-permintaan') . '/' . $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
                                                     </a> --}}
-                                                    <a href="{{ url('admin/transaksi/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
+                                                    <a href="{{ url('admin/transaksi/permintaan/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
                                                         Hapus
                                                     </a>
                                                 </td>
