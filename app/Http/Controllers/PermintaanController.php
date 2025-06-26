@@ -13,11 +13,13 @@ class PermintaanController extends Controller
         // Logika untuk menampilkan data permintaan
 
         $dataPermintaan = Permintaan::with('barang')->get();
+        $dataBarang = Barang::all(); // Ambil semua data barang untuk dropdown
         $data = [
             'title' => 'Data Permintaan',
             'dropdown' => 'transaksi',
             'active' => 'permintaan',
             'dataPermintaan' => $dataPermintaan,
+            'dataBarang' => $dataBarang,
             'hasDatatable' => '1',
 
         ];
@@ -67,5 +69,50 @@ class PermintaanController extends Controller
         $permintaan->delete();
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil dihapus.');
+    }
+
+    public function editPermintaan($id)
+    {
+        // Logika untuk mengedit permintaan
+        $permintaan = Permintaan::where('id_permintaan', $id)->first();
+
+        if (!$permintaan) {
+            return response()->json(['error' => 'Permintaan tidak ditemukan.'], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Permintaan berhasil diperbarui.',
+            'data' => $permintaan
+        ]);
+    }
+
+    public function updatePermintaan(Request $request)
+    {
+
+        // Logika untuk memperbarui permintaan
+        $validatedData = $request->validate([
+            'id_permintaan' => 'required|string|max:255',
+            'issued_by' => 'required|string|max:255',
+            'id_barang' => 'required|string|max:255',
+            'jumlah_permintaan' => 'required|integer|min:1',
+        ]);
+
+        $permintaan = Permintaan::where('id_permintaan', $validatedData['id_permintaan'])->first();
+
+        if (!$permintaan) {
+            return response()->json(['error' => 'Permintaan tidak ditemukan.'], 404);
+        }
+
+        $validatedData['tanggal_permintaan'] = now(); // Update the date to current time
+        $validatedData['status_permintaan'] = $permintaan->status_permintaan; // Reset status to pending
+
+        $result = $permintaan->update($validatedData);
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Gagal memperbarui permintaan.');
+        }
+
+        return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil diperbarui.');
     }
 }
