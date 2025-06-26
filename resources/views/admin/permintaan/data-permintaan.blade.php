@@ -72,9 +72,9 @@
                                                 <td>{{ $permintaan->tanggal_permintaan }}</td>
                                                 <td>{{ $permintaan->status_permintaan }}</td>
                                                 <td>
-                                                    <button type="button" value="{{ $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
+                                                    {{-- <button type="button" value="{{ $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
-                                                    </button>
+                                                    </button> --}}
                                                     {{-- <a href="{{ url('admin/transaksi/get-permintaan') . '/' . $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
                                                     </a> --}}

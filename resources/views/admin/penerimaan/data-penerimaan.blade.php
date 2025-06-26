@@ -68,9 +68,9 @@
                                                 <td>{{ $penerimaan->barang->satuan_barang }}</td>
                                                 <td>{{ $penerimaan->tanggal_penerimaan }}</td>
                                                 <td>
-                                                    <button type="button" value="{{ $penerimaan->id_penerimaan }}" id="editDataPenerimaan" class="btn btn-warning btn-sm">
+                                                    {{-- <button type="button" value="{{ $penerimaan->id_penerimaan }}" id="editDataPenerimaan" class="btn btn-warning btn-sm">
                                                         Edit
-                                                    </button>
+                                                    </button> --}}
                                                     {{-- <a href="{{ url('admin/transaksi/get-penerimaan') . '/' . $penerimaan->id_penerimaan }}" id="editDataPenerimaan" class="btn btn-warning btn-sm">
                                                         Edit
                                                     </a> --}}
