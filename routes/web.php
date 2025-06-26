@@ -24,6 +24,11 @@ Route::get('admin/dashboard', [DashboardController::class, 'index']);
 
 // Route untuk Master Data
 Route::get('admin/master/kategori', [KategoriController::class, 'index']);
+Route::get('admin/master/tambah-kategori', [KategoriController::class, 'tambahKategori']);
+Route::post('admin/master/tambah-kategori', [KategoriController::class, 'simpanKategori']);
+Route::get('admin/master/kategori/hapus/{id}', [KategoriController::class, 'hapusKategori']);
+Route::get('admin/master/kategori/{id}', [KategoriController::class, 'getKategori']);
+Route::post('admin/master/kategori/update', [KategoriController::class, 'updateKategori']);
 Route::get('admin/master/barang', [BarangController::class, 'index']);
 
 // Route untuk Transaksi
