@@ -11,7 +11,7 @@ class DashboardController extends Controller
 
         $data = [
             'title' => 'Dashboard',
-            'description' => 'Welcome to the dashboard',
+            'dropdown' => 'dashboard',
             'active' => 'dashboard',
             'hasDatatable' => '0',
         ];
