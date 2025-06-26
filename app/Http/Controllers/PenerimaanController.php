@@ -46,7 +46,8 @@ class PenerimaanController extends Controller
     {
         // Logika untuk menambahkan penerimaan baru
         // dd($request->all()); // Debugging line to check the request data
-        $barang = Barang::where('id_barang', $request->id_barang)->first();
+        $barang = Barang::where('id_barang', $request->id_barang);
+        $dataBarang = $barang->first();
         $validatedData = $request->validate([
             'id_barang' => 'required|string|max:255',
             'jumlah' => 'required|integer|min:1',
@@ -54,7 +55,7 @@ class PenerimaanController extends Controller
 
         $validatedData['id_penerimaan'] = 'PMT-' . time(); // Generate unique ID for the request
         $validatedData['tanggal_penerimaan'] = now(); // Set the current date and time
-        $validatedData['satuan_barang'] = $barang->satuan_barang; // Set the unit of the item
+        $validatedData['satuan_barang'] = $dataBarang->satuan_barang; // Set the unit of the item
         $validatedData['keterangan'] = $request->keterangan ?? ''; // Optional field
 
         // dd($validatedData);
@@ -62,6 +63,9 @@ class PenerimaanController extends Controller
         if (!$result) {
             return redirect()->back()->with('error', 'Gagal menambahkan data penerimaan.');
         }
+        $barang->update([
+            'stok_barang' => $dataBarang->stok_barang + $validatedData['jumlah']
+        ]);
 
         return redirect()->to('admin/transaksi/data-penerimaan')->with('success', 'Data penerimaan berhasil ditambahkan.');
     }
@@ -70,7 +74,15 @@ class PenerimaanController extends Controller
     {
         // Logika untuk menghapus penerimaan berdasarkan ID
         $penerimaan = Penerimaan::where('id_penerimaan', $id)->first();
-        $penerimaan->delete();
+        $result = $penerimaan->delete();
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Gagal menghapus data penerimaan.');
+        }
+        $barang = Barang::where('id_barang', $penerimaan->id_barang)->first();
+        $barang->update([
+            'stok_barang' => $barang->stok_barang - $penerimaan->jumlah
+        ]);
 
         return redirect()->to('admin/transaksi/data-penerimaan')->with('success', 'Data permintaan berhasil dihapus.');
     }
@@ -93,23 +105,24 @@ class PenerimaanController extends Controller
 
     public function updatePenerimaan(Request $request)
     {
-        // Logika untuk memperbarui permintaan
-        $barang = Barang::where('id_barang', $request->id_barang)->first();
+        // Logika untuk memperbarui penerimaan
+        $barang = Barang::where('id_barang', $request->id_barang);
+        $dataBarang = $barang->first();
         $validatedData = $request->validate([
             'id_penerimaan' => 'required|string|max:255',
             'id_barang' => 'required|string|max:255',
             'jumlah' => 'required|integer|min:1',
         ]);
 
-        $permintaan = Penerimaan::where('id_penerimaan', $validatedData['id_penerimaan'])->first();
+        $penerimaan = Penerimaan::where('id_penerimaan', $validatedData['id_penerimaan'])->first();
 
-        if (!$permintaan) {
+        if (!$penerimaan) {
             return response()->json(['error' => 'Data penerimaan tidak ditemukan.'], 404);
         }
 
         $validatedData['tanggal_penerimaan'] = now(); // Update the date to current time
-        $validatedData['satuan_barang'] = $barang->satuan_barang; // Update the unit of the item
-        $result = $permintaan->update($validatedData);
+        $validatedData['satuan_barang'] = $dataBarang->satuan_barang; // Update the unit of the item
+        $result = $penerimaan->update($validatedData);
 
         if (!$result) {
             return redirect()->back()->with('error', 'Gagal memperbarui data penerimaan.');

@@ -57,7 +57,19 @@ class PermintaanController extends Controller
         $validatedData['status_permintaan'] = 'pending'; // Default status
 
         // dd($validatedData);
-        Permintaan::create($validatedData);
+        $result = Permintaan::create($validatedData);
+        if (!$result) {
+            return redirect()->back()->with('error', 'Gagal menambahkan permintaan.');
+        }
+        // Update the stock of the requested item
+        $barang = Barang::where('id_barang', $validatedData['id_barang'])->first();
+        if ($barang) {
+            $barang->update([
+                'stok_barang' => $barang->stok_barang - $validatedData['jumlah_permintaan']
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'Barang tidak ditemukan.');
+        }
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil ditambahkan.');
     }
@@ -66,7 +78,20 @@ class PermintaanController extends Controller
     {
         // Logika untuk menghapus permintaan berdasarkan ID
         $permintaan = Permintaan::where('id_permintaan', $id)->first();
-        $permintaan->delete();
+        $result = $permintaan->delete();
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Gagal menghapus permintaan.');
+        }
+        // Update the stock of the requested item
+        $barang = Barang::where('id_barang', $permintaan->id_barang)->first();
+        if ($barang) {
+            $barang->update([
+                'stok_barang' => $barang->stok_barang + $permintaan->jumlah_permintaan
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'Barang tidak ditemukan.');
+        }
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil dihapus.');
     }
