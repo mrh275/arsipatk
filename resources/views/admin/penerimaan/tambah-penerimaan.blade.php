@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="jumlah">Jumlah Barang</label>
-                                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Masukkan jumlah permintaan" required>
+                                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Masukkan jumlah barang" required>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
