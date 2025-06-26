@@ -141,11 +141,11 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
+                </div>
             </form>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+        <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
 @endsection
@@ -188,7 +188,7 @@
                 });
             });
 
-            $('#editDataPermintaan').on('click', function() {
+            $('#example1').on('click', '#editDataPermintaan', function() {
                 const idPermintaan = $(this).val();
                 // Fetch data for the selected permintaan
                 $.ajax({
