@@ -59,4 +59,13 @@ class PermintaanController extends Controller
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil ditambahkan.');
     }
+
+    public function hapusPermintaan($id)
+    {
+        // Logika untuk menghapus permintaan berdasarkan ID
+        $permintaan = Permintaan::where('id_permintaan', $id)->first();
+        $permintaan->delete();
+
+        return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil dihapus.');
+    }
 }
