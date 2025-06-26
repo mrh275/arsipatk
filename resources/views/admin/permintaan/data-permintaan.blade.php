@@ -72,9 +72,12 @@
                                                 <td>{{ $permintaan->tanggal_permintaan }}</td>
                                                 <td>{{ $permintaan->status_permintaan }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-warning btn-sm">
+                                                    <button type="button" value="{{ $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
-                                                    </a>
+                                                    </button>
+                                                    {{-- <a href="{{ url('admin/transaksi/get-permintaan') . '/' . $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
+                                                        Edit
+                                                    </a> --}}
                                                     <a href="{{ url('admin/transaksi/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
                                                         Hapus
                                                     </a>
@@ -97,6 +100,54 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    {{-- Edit Modal --}}
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog">
+            <form action="{{ url('admin/transaksi/update-permintaan') }}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Default Modal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="id_permintaan">ID Permintaan</label>
+                            <input type="hidden" class="form-control" id="id_permintaan" name="id_permintaan" required>
+                            <input type="text" class="form-control" id="id_permintaan_preview" name="id_permintaan_preview" disabled="disabled" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="issued_by">Issued By</label>
+                            <input type="text" class="form-control" id="issued_by" name="issued_by" placeholder="Masukkan nama yang mengeluarkan permintaan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="barang_id">Barang</label>
+                            <select class="form-control" id="barang_id" name="id_barang" required>
+                                <option value="">Pilih Barang</option>
+                                @foreach ($dataBarang as $barang)
+                                    <option value="{{ $barang->id_barang }}">{{ $barang->nama_barang }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_permintaan">Jumlah Permintaan</label>
+                            <input type="number" class="form-control" id="jumlah_permintaan" name="jumlah_permintaan" placeholder="Masukkan jumlah permintaan" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @endsection
 
 @push('scripts')
@@ -133,6 +184,30 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = url;
+                    }
+                });
+            });
+
+            $('#editDataPermintaan').on('click', function() {
+                const idPermintaan = $(this).val();
+                // Fetch data for the selected permintaan
+                $.ajax({
+                    url: "{{ url('admin/transaksi/get-permintaan') }}/" + idPermintaan,
+                    method: 'GET',
+                    success: function(response) {
+                        $('#id_permintaan').val(response.data.id_permintaan);
+                        $('#id_permintaan_preview').val(response.data.id_permintaan);
+                        $('#issued_by').val(response.data.issued_by);
+                        $('#barang_id').val(response.data.id_barang);
+                        $('#jumlah_permintaan').val(response.data.jumlah_permintaan);
+                        $('#editModal').modal('show');
+                    },
+                    error: function(response) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.error
+                        });
                     }
                 });
             });
