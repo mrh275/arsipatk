@@ -30,6 +30,11 @@ Route::get('admin/master/kategori/hapus/{id}', [KategoriController::class, 'hapu
 Route::get('admin/master/kategori/{id}', [KategoriController::class, 'getKategori']);
 Route::post('admin/master/kategori/update', [KategoriController::class, 'updateKategori']);
 Route::get('admin/master/barang', [BarangController::class, 'index']);
+Route::get('admin/master/tambah-barang', [BarangController::class, 'tambahBarang']);
+Route::post('admin/master/tambah-barang', [BarangController::class, 'simpanBarang']);
+Route::get('admin/master/barang/hapus/{id}', [BarangController::class, 'hapusBarang']);
+Route::get('admin/master/barang/{id}', [BarangController::class, 'getBarang']);
+Route::post('admin/master/barang/update', [BarangController::class, 'updateBarang']);
 
 // Route untuk Transaksi
 Route::get('admin/transaksi/data-permintaan', [PermintaanController::class, 'index']);
