@@ -18,6 +18,22 @@
                         </ol>
                     </div>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
             </div><!-- /.container-fluid -->
         </section>
 
@@ -59,7 +75,7 @@
                                                     <a href="#" class="btn btn-warning btn-sm">
                                                         Edit
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-sm">
+                                                    <a href="{{ url('admin/transaksi/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
                                                         Hapus
                                                     </a>
                                                 </td>
@@ -101,6 +117,25 @@
                     }
                 }]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        $(document).ready(function() {
+            $('#example1').on('click', '.btn-danger', function(e) {
+                e.preventDefault();
+                const url = $(this).attr('href');
+                Swal.fire({
+                    title: 'Hapus Permintaan',
+                    text: "Apakah Anda yakin ingin menghapus data permintaan ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
         });
     </script>
 @endpush
