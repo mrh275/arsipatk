@@ -82,7 +82,7 @@ class PermintaanController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Permintaan berhasil diperbarui.',
+            'message' => 'Permintaan berhasil ditemukan.',
             'data' => $permintaan
         ]);
     }
