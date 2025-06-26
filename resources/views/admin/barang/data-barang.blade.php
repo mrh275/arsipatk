@@ -18,6 +18,22 @@
                         </ol>
                     </div>
                 </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
             </div><!-- /.container-fluid -->
         </section>
 
@@ -52,10 +68,10 @@
                                                 <td>{{ $barang->stok_barang }}</td>
                                                 <td>{{ $barang->satuan_barang }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-warning btn-sm">
+                                                    <button type="button" value="{{ $barang->id_barang }}" class="btn btn-warning btn-sm" id="editBarang">
                                                         Edit
-                                                    </a>
-                                                    <a href="#" class="btn btn-danger btn-sm">
+                                                    </button>
+                                                    <a href="{{ url('admin/master/barang/hapus') . '/' . $barang->id_barang }}" class="btn btn-danger btn-sm">
                                                         Hapus
                                                     </a>
                                                 </td>
@@ -77,6 +93,54 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    {{-- Edit Modal --}}
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog">
+            <form action="{{ url('admin/master/barang/update') }}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Kategori</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="id_barang">ID Barang</label>
+                            <input type="hidden" class="form-control" id="id_barang" name="id_barang" required>
+                            <input type="text" class="form-control" id="id_barang_preview" name="id_barang_preview" disabled="disabled" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_kategori">Kategori Barang</label>
+                            <select name="id_kategori" class="form-control" id="id_kategori">
+                                <option value="">Pilih :</option>
+                                @foreach ($dataKategori as $kategori)
+                                    <option value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_barang">Nama Barang</label>
+                            <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Masukkan nama barang" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="satuan_barang">Satuan Barang</label>
+                            <input type="text" class="form-control" id="satuan_barang" name="satuan_barang" placeholder="Masukkan nama satuan barang" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @endsection
 
 @push('scripts')
@@ -86,6 +150,59 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "buttons": [{
+                    text: '<i class="fas fa-plus"></i> Tambah Barang',
+                    className: 'btn-primary',
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary');
+                    },
+                    action: function(e, dt, node, config) {
+                        window.location.href = "{{ url('admin/master/tambah-barang') }}";
+                    }
+                }]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+        $(document).ready(function() {
+            $('#example1').on('click', '.btn-danger', function(e) {
+                e.preventDefault();
+                const url = $(this).attr('href');
+                Swal.fire({
+                    title: 'Hapus Barang',
+                    text: "Apakah Anda yakin ingin menghapus data ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                });
+            });
+
+            $('#example1').on('click', '#editBarang', function() {
+                const idBarang = $(this).val();
+                // Fetch data for the selected penerimaan
+                $.ajax({
+                    url: "{{ url('admin/master/barang') }}/" + idBarang,
+                    method: 'GET',
+                    success: function(response) {
+                        $('#id_barang').val(response.data.id_barang);
+                        $('#id_barang_preview').val(response.data.id_barang);
+                        $('#id_kategori').val(response.data.kategori.id_kategori);
+                        $('#nama_barang').val(response.data.nama_barang);
+                        $('#satuan_barang').val(response.data.satuan_barang);
+                        $('#editModal').modal('show');
+                    },
+                    error: function(response) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.error
+                        });
+                    }
+                });
             });
         });
     </script>
