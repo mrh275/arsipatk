@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarangExport;
 use App\Models\Barang;
 use App\Models\Penerimaan;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -39,12 +41,17 @@ class LaporanController extends Controller
 
         // dd($dataBarang); // Debugging, bisa dihapus setelah selesai
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
-        $pdf = Pdf::loadView('admin.laporan.export.persediaan-pdf', [
-            'dataBarang' => $dataBarang,
-            'format' => $format
-        ]);
+        if ($format == 'excel') {
+            // Jika formatnya Excel, gunakan Maatwebsite Excel
+            return Excel::download(new BarangExport, 'laporan-persediaan-barang.xlsx');
+        } else {
+            $pdf = Pdf::loadView('admin.laporan.export.persediaan-pdf', [
+                'dataBarang' => $dataBarang,
+                'format' => $format
+            ]);
 
-        return $pdf->download('laporan_persediaan-barang.pdf');
+            return $pdf->download('laporan_persediaan-barang.pdf');
+        }
     }
 
     public function laporanPermintaan()
