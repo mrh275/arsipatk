@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -29,13 +30,13 @@ class LaporanController extends Controller
 
         $dataBarang = Barang::with('kategori')->get(); // Ambil semua data barang
 
-        dd($dataBarang); // Debugging, bisa dihapus setelah selesai
+        // dd($dataBarang); // Debugging, bisa dihapus setelah selesai
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
-        $pdf = PDF::loadView('admin.laporan.export.persediaan-pdf', [
+        $pdf = Pdf::loadView('admin.laporan.export.persediaan-pdf', [
             'dataBarang' => $dataBarang,
             'format' => $format
         ]);
 
-        return response()->json(['message' => 'Laporan berhasil dicetak']);
+        return $pdf->download('laporan_persediaan-barang.pdf');
     }
 }
