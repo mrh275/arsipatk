@@ -55,4 +55,6 @@ Route::post('admin/transaksi/update-penerimaan', [PenerimaanController::class, '
 Route::get('admin/laporan/persediaan', [LaporanController::class, 'laporanPersediaan']);
 Route::post('admin/laporan/persediaan', [LaporanController::class, 'cetakLaporanPersediaan']);
 Route::get('admin/laporan/permintaan', [LaporanController::class, 'laporanPermintaan']);
+Route::post('admin/laporan/permintaan', [LaporanController::class, 'cetakLaporanPermintaan']);
 Route::get('admin/laporan/penerimaan', [LaporanController::class, 'laporanPenerimaan']);
+Route::post('admin/laporan/penerimaan', [LaporanController::class, 'cetakLaporanPenerimaan']);
