@@ -53,7 +53,7 @@ class PenerimaanController extends Controller
             'jumlah' => 'required|integer|min:1',
         ]);
 
-        $validatedData['id_penerimaan'] = 'PMT-' . time(); // Generate unique ID for the request
+        $validatedData['id_penerimaan'] = 'TRX-I-' . time(); // Generate unique ID for the request
         $validatedData['tanggal_penerimaan'] = now(); // Set the current date and time
         $validatedData['satuan_barang'] = $dataBarang->satuan_barang; // Set the unit of the item
         $validatedData['keterangan'] = $request->keterangan ?? ''; // Optional field

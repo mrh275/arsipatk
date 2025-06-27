@@ -52,7 +52,7 @@ class PermintaanController extends Controller
             'jumlah_permintaan' => 'required|integer|min:1',
         ]);
 
-        $validatedData['id_permintaan'] = 'PMT-' . time(); // Generate unique ID for the request
+        $validatedData['id_permintaan'] = 'TRX-O-' . time(); // Generate unique ID for the request
         $validatedData['tanggal_permintaan'] = now(); // Set the current date and time
         $validatedData['status_permintaan'] = 'pending'; // Default status
 
