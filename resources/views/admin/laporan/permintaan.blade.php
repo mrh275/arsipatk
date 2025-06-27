@@ -8,13 +8,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Laporan Persediaan</h1>
+                        <h1>Laporan Permintaan</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Admin</a></li>
                             <li class="breadcrumb-item"><a href="#">Laporam</a></li>
-                            <li class="breadcrumb-item active">Persediaan</li>
+                            <li class="breadcrumb-item active">Permintaan</li>
                         </ol>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ url('admin/laporan/persediaan') }}" method="post">
+                                <form action="{{ url('admin/laporan/permintaan') }}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <label for="format_laporan">Format Laporan</label>
