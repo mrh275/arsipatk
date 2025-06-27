@@ -6,8 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\Barang;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +24,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        User::create([
+            'name' => 'Admin',
+            'username' => 'admin',
+            'password' => Hash::make('admin123'), // Password yang sudah di-hash
+        ]);
 
         Kategori::create([
             'id_kategori' => 'K001',
