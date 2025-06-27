@@ -9,6 +9,11 @@ class KategoriController extends Controller
 {
     public function index()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         $dataKategori = Kategori::all();
         $data = [
             'title' => 'Kategori',
@@ -22,6 +27,11 @@ class KategoriController extends Controller
 
     public function tambahKategori()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         $data = [
             'title' => 'Tambah Kategori',
             'dropdown' => 'master',
@@ -49,6 +59,7 @@ class KategoriController extends Controller
 
     public function hapusKategori($id)
     {
+
         $kategori = Kategori::where('id_kategori', $id);
         $result = $kategori->delete();
 

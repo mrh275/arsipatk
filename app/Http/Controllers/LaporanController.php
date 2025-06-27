@@ -12,6 +12,11 @@ class LaporanController extends Controller
 {
     public function laporanPersediaan()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
 
         $data = [
             'title' => 'Laporan Persediaan',
@@ -44,6 +49,11 @@ class LaporanController extends Controller
 
     public function laporanPermintaan()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         $data = [
             'title' => 'Laporan Permintaan',
             'dropdown' => 'laporan',
@@ -91,6 +101,11 @@ class LaporanController extends Controller
 
     public function laporanPenerimaan()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         $data = [
             'title' => 'Laporan Penerimaan',
             'dropdown' => 'laporan',

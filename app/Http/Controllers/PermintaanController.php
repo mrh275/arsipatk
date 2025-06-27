@@ -10,6 +10,11 @@ class PermintaanController extends Controller
 {
     public function index()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         // Logika untuk menampilkan data permintaan
 
         $dataPermintaan = Permintaan::with('barang')->get();
@@ -30,6 +35,11 @@ class PermintaanController extends Controller
 
     public function tambahPermintaan()
     {
+        // Cek apakah pengguna sudah login
+        if (!session()->has('username')) {
+            return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
         // Logika untuk menampilkan form tambah permintaan
         $dataBarang = Barang::all(); // Ambil semua data barang untuk dropdown
         $data = [

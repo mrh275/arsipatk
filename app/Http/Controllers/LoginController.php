@@ -9,6 +9,11 @@ class LoginController extends Controller
 {
     public function index()
     {
+        // Cek apakah pengguna sudah login
+        if (session()->has('username')) {
+            return redirect('admin/dashboard')->with('success', 'Anda sudah login sebagai ' . session('username') . '.');
+        }
+        // Jika belum login, tampilkan halaman login
         $data = [
             'title' => 'Login',
             'description' => 'Login to your account',
@@ -35,5 +40,13 @@ class LoginController extends Controller
 
         // Jika gagal, kembali ke halaman login dengan pesan error
         return redirect()->back()->withErrors(['login_error' => 'Username atau password salah.']);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        session()->forget('username');
+        session()->flush();
+        return redirect('/')->with('success', 'Anda telah berhasil logout.');
     }
 }
