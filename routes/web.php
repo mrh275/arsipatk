@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenerimaanController;
@@ -49,3 +50,9 @@ Route::post('admin/transaksi/tambah-penerimaan', [PenerimaanController::class, '
 Route::get('admin/transaksi/penerimaan/hapus/{id}', [PenerimaanController::class, 'hapusPenerimaan']);
 Route::get('admin/transaksi/get-penerimaan/{id}', [PenerimaanController::class, 'editPenerimaan']);
 Route::post('admin/transaksi/update-penerimaan', [PenerimaanController::class, 'updatePenerimaan']);
+
+// Route untuk Laporan
+Route::get('admin/laporan/persediaan', [LaporanController::class, 'laporanPersediaan']);
+Route::post('admin/laporan/persediaan', [LaporanController::class, 'cetakLaporanPersediaan']);
+Route::get('admin/laporan/permintaan', [LaporanController::class, 'laporanPermintaan']);
+Route::get('admin/laporan/penerimaan', [LaporanController::class, 'laporanPenerimaan']);
