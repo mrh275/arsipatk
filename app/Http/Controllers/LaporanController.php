@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\BarangExport;
 use App\Models\Barang;
 use App\Models\Penerimaan;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
+use App\Exports\BarangExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PenerimaanBarangExport;
+use App\Exports\PermintaanBarangExport;
 
 class LaporanController extends Controller
 {
@@ -99,11 +101,16 @@ class LaporanController extends Controller
 
         // Ambil data permintaan sesuai dengan format yang dipilih
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
-        $pdf = Pdf::loadView('admin.laporan.export.permintaan-pdf', [
-            'dataPermintaan' => $dataPermintaan,
-        ]);
+        if ($format == 'excel') {
+            // Jika formatnya Excel, gunakan Maatwebsite Excel
+            return Excel::download(new PermintaanBarangExport, 'laporan-permintaan-barang.xlsx');
+        } else {
+            $pdf = Pdf::loadView('admin.laporan.export.permintaan-pdf', [
+                'dataPermintaan' => $dataPermintaan,
+            ]);
 
-        return $pdf->download('laporan_permintaan.pdf');
+            return $pdf->download('laporan_permintaan.pdf');
+        }
     }
 
     public function laporanPenerimaan()
@@ -131,6 +138,7 @@ class LaporanController extends Controller
         $format = $request->input('format_laporan');
         $periodeTahun = $request->input('periode_tahun');
         $periodeBulan = $request->input('periode_bulan');
+        $dataPenerimaan = [];
         // Validasi input
         if (!$format || !$periodeTahun || !$periodeBulan) {
             return redirect()->back()->with('error', 'Format laporan, tahun, dan bulan harus dipilih.');
@@ -151,10 +159,15 @@ class LaporanController extends Controller
 
         // Ambil data penerimaan sesuai dengan format yang dipilih
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
-        $pdf = Pdf::loadView('admin.laporan.export.penerimaan-pdf', [
-            'dataPenerimaan' => $dataPenerimaan,
-        ]);
+        if ($format == 'excel') {
+            // Jika formatnya Excel, gunakan Maatwebsite Excel
+            return Excel::download(new PenerimaanBarangExport, 'laporan-penerimaan-barang.xlsx');
+        } else {
+            $pdf = Pdf::loadView('admin.laporan.export.penerimaan-pdf', [
+                'dataPenerimaan' => $dataPenerimaan,
+            ]);
 
-        return $pdf->download('laporan_penerimaan.pdf');
+            return $pdf->download('laporan_penerimaan.pdf');
+        }
     }
 }
