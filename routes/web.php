@@ -21,6 +21,7 @@ use App\Http\Controllers\PermintaanController;
 */
 
 Route::get('/', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'login']);
 Route::get('admin/dashboard', [DashboardController::class, 'index']);
 
 // Route untuk Master Data
