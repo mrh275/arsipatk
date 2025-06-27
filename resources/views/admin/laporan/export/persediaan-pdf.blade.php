@@ -44,21 +44,23 @@
 <body>
 
     <h1>Laporan Data Barang</h1>
+    <h3 style="text-align: center">Data per {{ date('d F Y') }}</h3>
 
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama Barang</th>
                 <th>Kategori</th>
+                <th>Nama Barang</th>
+                <th>Jumlah Stok</th>
+                <th>Satuan Barang</th>
             </tr>
         </thead>
         <tbody>
             {{-- Lakukan perulangan untuk menampilkan data barang --}}
-            @foreach ($barang as $index => $item)
+            @foreach ($dataBarang as $index => $item)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $item->nama_barang }}</td>
                     <td>
                         {{-- Tampilkan nama kategori --}}
                         @if ($item->kategori)
@@ -67,6 +69,9 @@
                             -
                         @endif
                     </td>
+                    <td>{{ $item->nama_barang }}</td>
+                    <td>{{ $item->stok_barang }}</td>
+                    <td>{{ $item->satuan_barang }}</td>
                 </tr>
             @endforeach
         </tbody>
