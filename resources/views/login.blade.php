@@ -9,6 +9,14 @@
                     <a href="../../index2.html" class="h1">Arsip<b>ATK</b></a>
                 </div>
                 <div class="card-body">
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error!</strong> {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <p class="login-box-msg">Sign in to start your session</p>
 
                     <form action="{{ url('login') }}" method="post">
