@@ -30,9 +30,9 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>150</h3>
+                                <h3>{{ $stokBarang }}</h3>
 
-                                <h5>Barang</h5>
+                                <h5>Stok Barang</h5>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-box"></i>
@@ -45,7 +45,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                                <h3>{{ $kategoriBarang }}</h3>
 
                                 <h5>Kategori</h5>
                             </div>
@@ -60,9 +60,9 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>44</h3>
+                                <h3>{{ $dataPermintaan }}</h3>
 
-                                <h5>Divisi</h5>
+                                <h5>Permintaan</h5>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users"></i>
@@ -75,9 +75,9 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65</h3>
+                                <h3>{{ $dataPenerimaan }}</h3>
 
-                                <h5>User</h5>
+                                <h5>Penerimaan</h5>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-user"></i>
