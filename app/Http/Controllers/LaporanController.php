@@ -41,7 +41,6 @@ class LaporanController extends Controller
 
         $dataBarang = Barang::with('kategori')->get(); // Ambil semua data barang
 
-        // dd($dataBarang); // Debugging, bisa dihapus setelah selesai
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
         if ($format == 'excel') {
             // Jika formatnya Excel, gunakan Maatwebsite Excel
@@ -103,7 +102,7 @@ class LaporanController extends Controller
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
         if ($format == 'excel') {
             // Jika formatnya Excel, gunakan Maatwebsite Excel
-            return Excel::download(new PermintaanBarangExport, 'laporan-permintaan-barang.xlsx');
+            return Excel::download(new PermintaanBarangExport($periodeTahun, $periodeBulan), 'laporan-permintaan-barang.xlsx');
         } else {
             $pdf = Pdf::loadView('admin.laporan.export.permintaan-pdf', [
                 'dataPermintaan' => $dataPermintaan,
@@ -161,7 +160,7 @@ class LaporanController extends Controller
         // Proses data dan cetak laporan sesuai format yang dipilih (PDF/Excel)
         if ($format == 'excel') {
             // Jika formatnya Excel, gunakan Maatwebsite Excel
-            return Excel::download(new PenerimaanBarangExport, 'laporan-penerimaan-barang.xlsx');
+            return Excel::download(new PenerimaanBarangExport($periodeTahun, $periodeBulan), 'laporan-penerimaan-barang.xlsx');
         } else {
             $pdf = Pdf::loadView('admin.laporan.export.penerimaan-pdf', [
                 'dataPenerimaan' => $dataPenerimaan,
