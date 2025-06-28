@@ -17,9 +17,9 @@ class DashboardController extends Controller
             return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
         }
         $stokBarang = Barang::all();
-        $kategoriBarang = Kategori::count();
-        $dataPermintaan = Permintaan::count();
-        $dataPenerimaan = Penerimaan::count();
+        $kategoriBarang = Kategori::all();
+        $dataPermintaan = Permintaan::all();
+        $dataPenerimaan = Penerimaan::all();
 
         $data = [
             'title' => 'Dashboard',
