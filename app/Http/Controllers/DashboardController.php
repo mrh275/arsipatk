@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
+use App\Models\Kategori;
+use App\Models\Penerimaan;
+use App\Models\Permintaan;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,12 +16,20 @@ class DashboardController extends Controller
         if (!session()->has('username')) {
             return redirect('/')->with('error', 'Anda harus login terlebih dahulu.');
         }
+        $stokBarang = Barang::all();
+        $kategoriBarang = Kategori::count();
+        $dataPermintaan = Permintaan::count();
+        $dataPenerimaan = Penerimaan::count();
 
         $data = [
             'title' => 'Dashboard',
             'dropdown' => 'dashboard',
             'active' => 'dashboard',
             'hasDatatable' => '0',
+            'stokBarang' => $stokBarang->sum('stok_barang'),
+            'kategoriBarang' => $kategoriBarang,
+            'dataPermintaan' => $dataPermintaan,
+            'dataPenerimaan' => $dataPenerimaan,
         ];
 
         return view('admin.dashboard', $data);
