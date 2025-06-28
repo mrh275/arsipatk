@@ -91,7 +91,6 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('assets') }}/dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('assets') }}/dist/js/pages/dashboard.js"></script>
     @stack('scripts')
 </body>
 
