@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,5 +49,33 @@ class LoginController extends Controller
         session()->forget('username');
         session()->flush();
         return redirect('/')->with('success', 'Anda telah berhasil logout.');
+    }
+
+    public function gantiPassword(Request $request)
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
+            'confirm_new_password' => 'required|same:new_password',
+        ]);
+        // Cek apakah password saat ini benar
+        if (!Auth::attempt(['username' => session('username'), 'password' => $request->old_password])) {
+            return redirect()->back()->withErrors(['current_password' => 'Password saat ini salah.']);
+        }
+
+        // Ganti password
+        $user = User::where('username', session('username'))->first();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        if ($user) {
+            // Hapus session username untuk memaksa pengguna login kembali
+            return redirect()->to('/admin/dashboard')->with('success', 'Password berhasil diganti.');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Gagal mengganti password.']);
+        }
+
+        return redirect('admin/dashboard')->with('success', 'Password berhasil diganti.');
     }
 }
