@@ -2,11 +2,17 @@
 
 @section('content')
     <div class="hold-transition login-page">
+        <div class="row mb-4">
+            <div class="col-12">
+                <img src="{{ url('assets/img/logo.png') }}" alt="Logo Sekolah" class="brand-img-login">
+                <h3 class="brand-text-login">SMAIT Al Irsyad <br>Al Islamiyah Karawang</h3>
+            </div>
+        </div>
         <div class="login-box">
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
                 <div class="card-header text-center">
-                    <a href="../../index2.html" class="h1">Arsip<b>ATK</b></a>
+                    <a href="{{ url('') }}" class="h1">Arsip<b>ATK</b></a>
                 </div>
                 <div class="card-body">
                     @if (session('error'))
@@ -62,6 +68,23 @@
         <!-- /.login-box -->
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        h3.brand-text-login {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        img.brand-img-login {
+            display: block;
+            margin: 0 auto;
+            width: 15rem;
+            height: auto;
+        }
+    </style>
+@endpush
 
 @push('scripts')
     <script>
