@@ -24,6 +24,7 @@ Route::get('/', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('admin/dashboard', [DashboardController::class, 'index']);
+Route::post('admin/ganti-password', [LoginController::class, 'gantiPassword']);
 
 // Route untuk Master Data
 Route::get('admin/master/kategori', [KategoriController::class, 'index']);
