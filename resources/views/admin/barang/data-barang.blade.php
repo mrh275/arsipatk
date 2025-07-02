@@ -53,7 +53,6 @@
                                             <th>ID Barang</th>
                                             <th>Nama Kategori</th>
                                             <th>Nama Barang</th>
-                                            <th>Stok Barang</th>
                                             <th>Satuan Barang</th>
                                             <th>Action</th>
                                         </tr>
@@ -65,7 +64,6 @@
                                                 <td>{{ $barang->id_barang }}</td>
                                                 <td>{{ $barang->kategori->nama_kategori }}</td>
                                                 <td>{{ $barang->nama_barang }}</td>
-                                                <td>{{ $barang->stok_barang }}</td>
                                                 <td>{{ $barang->satuan_barang }}</td>
                                                 <td>
                                                     <button type="button" value="{{ $barang->id_barang }}" class="btn btn-warning btn-sm" id="editBarang">

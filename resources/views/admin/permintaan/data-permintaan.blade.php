@@ -55,6 +55,7 @@
                                             <th>Nama Barang</th>
                                             <th>Jumlah Permintaan</th>
                                             <th>Satuan</th>
+                                            <th>Stok Barang</th>
                                             <th>Tanggal Permintaan</th>
                                             <th>Action</th>
                                         </tr>
@@ -68,6 +69,7 @@
                                                 <td>{{ $permintaan->barang->nama_barang }}</td>
                                                 <td>{{ $permintaan->jumlah_permintaan }}</td>
                                                 <td>{{ $permintaan->barang->satuan_barang }}</td>
+                                                <td>{{ $permintaan->barang->stok_barang }}</td>
                                                 <td>{{ $permintaan->tanggal_permintaan }}</td>
                                                 <td>
                                                     {{-- <button type="button" value="{{ $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
