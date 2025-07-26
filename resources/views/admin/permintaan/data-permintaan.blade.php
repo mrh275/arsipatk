@@ -72,7 +72,7 @@
                                                 <td>{{ $permintaan->barang->satuan_barang }}</td>
                                                 <td>{{ $permintaan->barang->stok_barang }}</td>
                                                 <td>{{ $permintaan->tanggal_permintaan }}</td>
-                                                <td>{{ $permintaan->status_permintaan }}</td>
+                                                <td><span class="badge {{ $permintaan->status_permintaan == 'approved' ? 'bg-success' : ($permintaan->status_permintaan == 'rejected' ? 'bg-danger' : 'bg-warning') }}">{{ $permintaan->status_permintaan }}</span></td>
                                                 <td>
                                                     {{-- <button type="button" value="{{ $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
@@ -81,7 +81,7 @@
                                                         Edit
                                                     </a> --}}
                                                     @if (session('user_role') == 'user')
-                                                        <a href="{{ url('admin/transaksi/permintaan/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
+                                                        <a href="{{ url('admin/transaksi/permintaan/hapus') . '/' . $permintaan->id_permintaan }}" {{ $permintaan->status_permintaan == 'pending' ? '' : 'aria-disabled="true"' }} class="btn btn-danger btn-sm {{ $permintaan->status_permintaan == 'pending' ? '' : 'disabled' }}">
                                                             Hapus
                                                         </a>
                                                     @endif
