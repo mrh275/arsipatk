@@ -50,6 +50,7 @@ class PermintaanBarangExport implements FromCollection, WithHeadings, ShouldAuto
                 'Jumlah Permintaan' => $permintaan->jumlah_permintaan,
                 'Satuan' => optional($permintaan->barang)->satuan_barang, // Menggunakan optional() untuk menghindari error jika relasi 'barang' null
                 'Tanggal Permintaan' => $tanggalFormatted,
+                'Status Permintaan' => $permintaan->status_permintaan,
             ];
         });
     }
@@ -66,6 +67,7 @@ class PermintaanBarangExport implements FromCollection, WithHeadings, ShouldAuto
             'Jumlah Permintaan',
             'Satuan',
             'Tanggal Permintaan',
+            'Status Permintaan'
         ];
     }
 }

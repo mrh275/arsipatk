@@ -56,6 +56,7 @@
                 <th>Jumlah Permintaan</th>
                 <th>Satuan Barang</th>
                 <th>Tanggal Permintaan</th>
+                <th>Status Permintaan</th>
             </tr>
         </thead>
         <tbody>
@@ -69,6 +70,7 @@
                     <td>{{ $item->jumlah_permintaan }}</td>
                     <td>{{ $item->barang->satuan_barang }}</td>
                     <td>{{ $item->tanggal_permintaan }}</td>
+                    <td>{{ $item->status_permintaan }}</td>
                 </tr>
             @endforeach
         </tbody>
