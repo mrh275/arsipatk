@@ -71,15 +71,6 @@ class PermintaanController extends Controller
         if (!$result) {
             return redirect()->back()->with('error', 'Gagal menambahkan permintaan.');
         }
-        // Update the stock of the requested item
-        $barang = Barang::where('id_barang', $validatedData['id_barang'])->first();
-        if ($barang) {
-            $barang->update([
-                'stok_barang' => $barang->stok_barang - $validatedData['jumlah_permintaan']
-            ]);
-        } else {
-            return redirect()->back()->with('error', 'Barang tidak ditemukan.');
-        }
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil ditambahkan.');
     }
@@ -149,5 +140,29 @@ class PermintaanController extends Controller
         }
 
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil diperbarui.');
+    }
+
+    public function updateStatusPermintaan(Request $request, $id)
+    {
+        // Logika untuk memperbarui status permintaan
+        $validatedData = $request->validate([
+            'status_permintaan' => 'required|string|in:approved,rejected',
+        ]);
+
+        $permintaan = Permintaan::where('id_permintaan', $id)->first();
+
+        if (!$permintaan) {
+            return response()->json(['error' => 'Permintaan tidak ditemukan.'], 404);
+        }
+
+        // Update the status of the request
+        $permintaan->status_permintaan = $validatedData['status_permintaan'];
+        $result = $permintaan->save();
+
+        if (!$result) {
+            return redirect()->back()->with('error', 'Gagal memperbarui status permintaan.');
+        }
+
+        return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Status permintaan berhasil diperbarui.');
     }
 }
