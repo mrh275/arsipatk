@@ -69,12 +69,14 @@
                                 <p>Permintaan</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/transaksi/data-penerimaan') }}" class="nav-link {{ $active == 'penerimaan' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penerimaan</p>
-                            </a>
-                        </li>
+                        @if (session('user_role') == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ url('admin/transaksi/data-penerimaan') }}" class="nav-link {{ $active == 'penerimaan' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Penerimaan</p>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
                 <li class="nav-item {{ $dropdown == 'laporan' ? 'menu-open' : '' }}">
@@ -86,22 +88,24 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ url('admin/laporan/persediaan') }}" class="nav-link {{ $active == 'laporan-persediaan' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Persediaan</p>
-                            </a>
-                        </li>
+                        @if (session('user_role') == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ url('admin/laporan/persediaan') }}" class="nav-link {{ $active == 'laporan-persediaan' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Persediaan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('admin/laporan/penerimaan') }}" class="nav-link {{ $active == 'laporan-penerimaan' ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Penerimaan</p>
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a href="{{ url('admin/laporan/permintaan') }}" class="nav-link {{ $active == 'laporan-permintaan' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Permintaan</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('admin/laporan/penerimaan') }}" class="nav-link {{ $active == 'laporan-penerimaan' ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Penerimaan</p>
                             </a>
                         </li>
                     </ul>

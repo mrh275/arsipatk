@@ -52,7 +52,9 @@
                                             <th>No</th>
                                             <th>ID Kategori</th>
                                             <th>Nama Kategori</th>
-                                            <th>Action</th>
+                                            @if (session('user_role') == 'admin')
+                                                <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,14 +63,16 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $kategori->id_kategori }}</td>
                                                 <td>{{ $kategori->nama_kategori }}</td>
-                                                <td>
-                                                    <button type="button" id="editKategori" value="{{ $kategori->id_kategori }}" class="btn btn-warning btn-sm">
-                                                        Edit
-                                                    </button>
-                                                    <a href="{{ url('admin/master/kategori/hapus') . '/' . $kategori->id_kategori }}" class="btn btn-danger btn-sm">
-                                                        Hapus
-                                                    </a>
-                                                </td>
+                                                @if (session('user_role') == 'admin')
+                                                    <td>
+                                                        <button type="button" id="editKategori" value="{{ $kategori->id_kategori }}" class="btn btn-warning btn-sm">
+                                                            Edit
+                                                        </button>
+                                                        <a href="{{ url('admin/master/kategori/hapus') . '/' . $kategori->id_kategori }}" class="btn btn-danger btn-sm">
+                                                            Hapus
+                                                        </a>
+                                                    </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -127,21 +131,30 @@
 @push('scripts')
     <script>
         $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": [{
-                    text: '<i class="fas fa-plus"></i> Tambah Kategori',
-                    className: 'btn-primary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    },
-                    action: function(e, dt, node, config) {
-                        window.location.href = "{{ url('admin/master/tambah-kategori') }}";
-                    }
-                }]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @if (session('user_role') == 'admin')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [{
+                        text: '<i class="fas fa-plus"></i> Tambah Kategori',
+                        className: 'btn-primary',
+                        init: function(api, node, config) {
+                            $(node).removeClass('btn-secondary');
+                        },
+                        action: function(e, dt, node, config) {
+                            window.location.href = "{{ url('admin/master/tambah-kategori') }}";
+                        }
+                    }]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @endif
+            @if (session('user_role') != 'admin')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                });
+            @endif
         });
         $(document).ready(function() {
             $('#example1').on('click', '.btn-danger', function(e) {
