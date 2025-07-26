@@ -45,6 +45,7 @@ Route::get('admin/transaksi/data-permintaan', [PermintaanController::class, 'ind
 Route::get('admin/transaksi/tambah-permintaan', [PermintaanController::class, 'tambahPermintaan']);
 Route::post('admin/transaksi/tambah-permintaan', [PermintaanController::class, 'simpanPermintaan']);
 Route::get('admin/transaksi/permintaan/hapus/{id}', [PermintaanController::class, 'hapusPermintaan']);
+Route::post('admin/transaksi/permintaan/verifikasi-permintaan', [PermintaanController::class, 'updateStatusPermintaan']);
 Route::get('admin/transaksi/get-permintaan/{id}', [PermintaanController::class, 'editPermintaan']);
 Route::post('admin/transaksi/update-permintaan', [PermintaanController::class, 'updatePermintaan']);
 Route::get('admin/transaksi/data-penerimaan', [PenerimaanController::class, 'index']);
