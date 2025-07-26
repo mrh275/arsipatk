@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         // Cek apakah pengguna sudah login
         if (session()->has('username')) {
-            return redirect('admin/dashboard')->with('success', 'Anda sudah login sebagai ' . session('username') . '.');
+            return redirect('admin/dashboard')->with('success', 'Anda sudah login sebagai ' . session('name') . '.');
         }
         // Jika belum login, tampilkan halaman login
         $data = [
