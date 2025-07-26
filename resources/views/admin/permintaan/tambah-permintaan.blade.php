@@ -48,6 +48,11 @@
                                     <div class="form-group">
                                         <label for="jumlah_permintaan">Jumlah Permintaan</label>
                                         <input type="number" class="form-control" id="jumlah_permintaan" name="jumlah_permintaan" placeholder="Masukkan jumlah permintaan" required>
+                                        <small class="form-text text-dark">
+                                            Sisa Stok:
+                                            <span id="sisa-stok-barang"></span>
+                                            <span id="satuan-barang"></span>
+                                        </small>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -70,4 +75,34 @@
 @endsection
 
 @push('scripts')
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize select2 for the barang_id dropdown
+            $('#barang_id').select2({
+                placeholder: 'Pilih Barang',
+                theme: 'bootstrap-5',
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            });
+
+
+            // Fetch and display the stock of the selected barang
+            $('#barang_id').on('change', function() {
+                var barangId = $(this).val();
+                const sisaStok = @json($dataBarang->pluck('stok_barang', 'id_barang'));
+                if (barangId) {
+                    var stok = sisaStok[barangId] || 0;
+                    $('#sisa-stok-barang').text(stok);
+                    var satuan = @json($dataBarang->pluck('satuan_barang', 'id_barang'))[barangId] || '';
+                    $('#satuan-barang').text(satuan);
+                } else {
+                    $('#sisa-stok-barang').text('');
+                    $('#satuan-barang').text('');
+                }
+            })
+        });
+    </script>
 @endpush
