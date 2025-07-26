@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link text-center">
+    <a href="{{ url('') }}" class="brand-link text-center">
         <span class="brand-text font-weight-semibold" style="font-size: 1.8rem !important">Arsip<b>ATK</b></span>
     </a>
 
@@ -12,8 +12,8 @@
             <div class="image">
                 <img src="{{ asset('assets') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
-            <div class="info">
-                <a href="#" class="d-block">{{ session('name') }}</a>
+            <div class="info text-white">
+                {{ session('name') }}
             </div>
         </div>
 
