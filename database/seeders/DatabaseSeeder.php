@@ -29,6 +29,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'admin',
             'password' => Hash::make('admin123'), // Password yang sudah di-hash
+            'role' => 'admin', // Menambahkan role admin
+        ]);
+        User::create([
+            'name' => 'Staf TU',
+            'username' => 'staf_tu',
+            'password' => Hash::make('staf123'), // Password yang sudah di-hash
+            'role' => 'user', // Menambahkan role user
         ]);
 
         Kategori::create([
