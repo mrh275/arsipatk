@@ -35,9 +35,10 @@ class LoginController extends Controller
         // Cek kredensial pengguna
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             session(['username' => $request->username]);
+            session(['name' => Auth::user()->name]); // Simpan nama pengguna di session
             session(['user_role' => Auth::user()->role]); // Simpan role pengguna di session
             return redirect()->intended('admin/dashboard')
-                ->with('success', 'Login berhasil! Selamat datang, ' . $request->username . '.');
+                ->with('success', 'Login berhasil! Selamat datang, ' . Auth::user()->name . '.');
         }
 
         // Jika gagal, kembali ke halaman login dengan pesan error
