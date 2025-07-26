@@ -53,8 +53,11 @@
                                             <th>ID Barang</th>
                                             <th>Nama Kategori</th>
                                             <th>Nama Barang</th>
+                                            <th>Stok Barang</th>
                                             <th>Satuan Barang</th>
-                                            <th>Action</th>
+                                            @if (session('user_role') == 'admin')
+                                                <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,15 +67,18 @@
                                                 <td>{{ $barang->id_barang }}</td>
                                                 <td>{{ $barang->kategori->nama_kategori }}</td>
                                                 <td>{{ $barang->nama_barang }}</td>
+                                                <td>{{ $barang->stok_barang }}</td>
                                                 <td>{{ $barang->satuan_barang }}</td>
-                                                <td>
-                                                    <button type="button" value="{{ $barang->id_barang }}" class="btn btn-warning btn-sm" id="editBarang">
-                                                        Edit
-                                                    </button>
-                                                    <a href="{{ url('admin/master/barang/hapus') . '/' . $barang->id_barang }}" class="btn btn-danger btn-sm">
-                                                        Hapus
-                                                    </a>
-                                                </td>
+                                                @if (session('user_role') == 'admin')
+                                                    <td>
+                                                        <button type="button" value="{{ $barang->id_barang }}" class="btn btn-warning btn-sm" id="editBarang">
+                                                            Edit
+                                                        </button>
+                                                        <a href="{{ url('admin/master/barang/hapus') . '/' . $barang->id_barang }}" class="btn btn-danger btn-sm">
+                                                            Hapus
+                                                        </a>
+                                                    </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -144,21 +150,30 @@
 @push('scripts')
     <script>
         $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": [{
-                    text: '<i class="fas fa-plus"></i> Tambah Barang',
-                    className: 'btn-primary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    },
-                    action: function(e, dt, node, config) {
-                        window.location.href = "{{ url('admin/master/tambah-barang') }}";
-                    }
-                }]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @if (session('user_role') == 'admin')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [{
+                        text: '<i class="fas fa-plus"></i> Tambah Barang',
+                        className: 'btn-primary',
+                        init: function(api, node, config) {
+                            $(node).removeClass('btn-secondary');
+                        },
+                        action: function(e, dt, node, config) {
+                            window.location.href = "{{ url('admin/master/tambah-barang') }}";
+                        }
+                    }]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @endif
+            @if (session('user_role') == 'user')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                });
+            @endif
         });
         $(document).ready(function() {
             $('#example1').on('click', '.btn-danger', function(e) {
