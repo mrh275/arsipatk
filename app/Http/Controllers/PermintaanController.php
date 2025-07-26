@@ -142,27 +142,46 @@ class PermintaanController extends Controller
         return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Permintaan berhasil diperbarui.');
     }
 
-    public function updateStatusPermintaan(Request $request, $id)
+    public function updateStatusPermintaan(Request $request)
     {
+
         // Logika untuk memperbarui status permintaan
-        $validatedData = $request->validate([
+        // Validate the request
+        $request->validate([
+            'id_permintaan' => 'required|string|max:255',
             'status_permintaan' => 'required|string|in:approved,rejected',
         ]);
 
-        $permintaan = Permintaan::where('id_permintaan', $id)->first();
+        $permintaan = Permintaan::where('id_permintaan', $request->input('id_permintaan'))->first();
 
         if (!$permintaan) {
             return response()->json(['error' => 'Permintaan tidak ditemukan.'], 404);
         }
 
         // Update the status of the request
-        $permintaan->status_permintaan = $validatedData['status_permintaan'];
+        $permintaan->status_permintaan = $request->input('status_permintaan');
         $result = $permintaan->save();
+
+        //Update the stock of the requested item if approved
+        if ($permintaan->status_permintaan === 'approved') {
+            $barang = Barang::where('id_barang', $permintaan->id_barang)->first();
+            if ($barang) {
+                $barang->update([
+                    'stok_barang' => $barang->stok_barang - $permintaan->jumlah_permintaan
+                ]);
+            } else {
+                return response()->json(['error' => 'Barang tidak ditemukan.'], 404);
+            }
+        }
 
         if (!$result) {
             return redirect()->back()->with('error', 'Gagal memperbarui status permintaan.');
         }
 
-        return redirect()->to('admin/transaksi/data-permintaan')->with('success', 'Status permintaan berhasil diperbarui.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Status permintaan berhasil diperbarui.',
+            'data' => $permintaan
+        ]);
     }
 }
