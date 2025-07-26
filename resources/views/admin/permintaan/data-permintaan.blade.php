@@ -80,9 +80,16 @@
                                                     {{-- <a href="{{ url('admin/transaksi/get-permintaan') . '/' . $permintaan->id_permintaan }}" id="editDataPermintaan" class="btn btn-warning btn-sm">
                                                         Edit
                                                     </a> --}}
-                                                    <a href="{{ url('admin/transaksi/permintaan/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
-                                                        Hapus
-                                                    </a>
+                                                    @if (session('user_role') == 'user')
+                                                        <a href="{{ url('admin/transaksi/permintaan/hapus') . '/' . $permintaan->id_permintaan }}" class="btn btn-danger btn-sm">
+                                                            Hapus
+                                                        </a>
+                                                    @endif
+                                                    @if (session('user_role') == 'admin')
+                                                        <button type="button" id="verifikasi-permintaan" {{ $permintaan->status_permintaan == 'pending' ? '' : 'disabled' }} value="{{ $permintaan->id_permintaan }}" class="btn btn-success btn-sm">
+                                                            Verifikasi
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -155,21 +162,29 @@
 @push('scripts')
     <script>
         $(function() {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": [{
-                    text: '<i class="fas fa-plus"></i> Tambah Permintaan',
-                    className: 'btn-primary',
-                    init: function(api, node, config) {
-                        $(node).removeClass('btn-secondary');
-                    },
-                    action: function(e, dt, node, config) {
-                        window.location.href = "{{ url('admin/transaksi/tambah-permintaan') }}";
-                    }
-                }]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @if (session('user_role') == 'user')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [{
+                        text: '<i class="fas fa-plus"></i> Tambah Permintaan',
+                        className: 'btn-primary',
+                        init: function(api, node, config) {
+                            $(node).removeClass('btn-secondary');
+                        },
+                        action: function(e, dt, node, config) {
+                            window.location.href = "{{ url('admin/transaksi/tambah-permintaan') }}";
+                        }
+                    }]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            @elseif (session('user_role') == 'admin')
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                });
+            @endif
         });
         $(document).ready(function() {
             $('#example1').on('click', '.btn-danger', function(e) {
@@ -186,6 +201,50 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = url;
+                    }
+                });
+            });
+
+            $('#example1').on('click', '#verifikasi-permintaan', function() {
+                const idPermintaan = $(this).val();
+                Swal.fire({
+                    title: 'Verifikasi Permintaan',
+                    text: "Apakah Anda yakin ingin memverifikasi permintaan dengan kode " + idPermintaan + " ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Approve',
+                    denyButtonText: 'Reject',
+                    showDenyButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed || result.isDenied) {
+
+                        $.ajax({
+                            url: "{{ url('admin/transaksi/permintaan/verifikasi-permintaan') }}",
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id_permintaan: idPermintaan,
+                                status_permintaan: result.isConfirmed ? 'approved' : 'rejected'
+                            },
+                            success: function(response) {
+                                console.log(response.message);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function(response) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.responseJSON.message
+                                });
+                            }
+                        });
                     }
                 });
             });
